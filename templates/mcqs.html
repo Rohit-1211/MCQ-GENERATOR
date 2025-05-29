@@ -1,0 +1,130 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generated MCQs</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .container {
+            text-align: left;
+            margin-top: 5%;
+        }
+        .card-body {
+            text-align: left;
+        }
+        /* Hide the correct answers initially */
+        .correct-answer {
+            display: none;
+        }
+        /* Highlight selected options */
+        .selected-correct {
+            background-color: rgba(40, 167, 69, 0.15);
+        }
+        .selected-incorrect {
+            background-color: rgba(220, 53, 69, 0.15);
+        }
+        .feedback-symbol {
+            display: none;
+            margin-left: 10px;
+        }
+        .selected-correct .feedback-symbol {
+            display: inline;
+            color: #28a745;
+        }
+        .selected-incorrect .feedback-symbol {
+            display: inline;
+            color: #dc3545;
+        }
+        .button-row {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body>
+    <!-- Start of content -->
+    <h1 class="mt-4 text-center">Generated MCQs</h1>
+    <div class="container" id="mcqs-container">
+        {% for index, mcq in mcqs %}
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Q{{ index }}: {{ mcq[0] }}?</h5>
+                    <form>
+                        {% set options = ['A', 'B', 'C', 'D'] %}
+                        {% set num_choices = mcq[1]|length %}
+                        {% for choice_index in range(num_choices) %}
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" 
+                                       name="answer{{ index }}" 
+                                       id="choice{{ index }}{{ choice_index }}" 
+                                       value="{{ choice_index }}" 
+                                       data-correct="{{ 'true' if options[choice_index] == mcq[2] else 'false' }}">
+                                <label class="form-check-label" for="choice{{ index }}{{ choice_index }}">
+                                    {{ options[choice_index] }}: {{ mcq[1][choice_index] }}
+                                    <span class="feedback-symbol">{{ "✓" if options[choice_index] == mcq[2] else "✗" }}</span>
+                                </label>
+                            </div>
+                        {% endfor %}
+                    </form>
+                    <!-- Display the correct answer with a class -->
+                    <small class="text-muted correct-answer">Correct Answer: {{ mcq[2] }}</small>
+                </div>
+            </div>
+        {% endfor %}
+        <!-- Button row for back and show results buttons -->
+        <div class="button-row">
+            <button onclick="goBack()" class="btn btn-primary">← Back</button>
+            <button id="show-results-btn" class="btn btn-primary">Show Results</button>
+        </div>
+    </div>
+    <!-- End of content -->
+
+    <!-- JavaScript to handle showing results -->
+    <script>
+        function goBack() {
+            window.history.back();
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add click event listeners to all radio inputs just to track selection
+            const radioInputs = document.querySelectorAll('input[type="radio"]');
+            radioInputs.forEach(function(radio) {
+                radio.addEventListener('click', function() {
+                    // Remove any existing feedback classes when selecting a new answer
+                    const allOptions = document.querySelectorAll(`input[name="${this.name}"]`);
+                    allOptions.forEach(option => {
+                        option.parentElement.classList.remove('selected-correct', 'selected-incorrect');
+                    });
+                });
+            });
+            
+            // Show Results button functionality
+            document.getElementById('show-results-btn').addEventListener('click', function() {
+                // Show all correct answers
+                const correctAnswers = document.getElementsByClassName('correct-answer');
+                for (let answer of correctAnswers) {
+                    answer.style.display = 'block';
+                }
+
+                // Highlight correct and incorrect selections
+                const allQuestions = document.querySelectorAll('form');
+                allQuestions.forEach(form => {
+                    const selectedOption = form.querySelector('input[type="radio"]:checked');
+                    if (selectedOption) {
+                        if (selectedOption.dataset.correct === 'true') {
+                            selectedOption.parentElement.classList.add('selected-correct');
+                        } else {
+                            selectedOption.parentElement.classList.add('selected-incorrect');
+                        }
+                    }
+                });
+                
+                // Hide the button after showing results
+                this.style.display = 'none';
+            });
+        });
+    </script>
+</body>
+</html>

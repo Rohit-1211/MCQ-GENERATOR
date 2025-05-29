@@ -1,0 +1,170 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MCQ Generator Application</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-container">
+            <div class="navbar-logo">MCQ Generator</div>
+            <button class="navbar-toggle" id="menuToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <div class="navbar-menu">
+                <a href="#home" class="navbar-link active">Home</a>
+                <a href="#about" class="navbar-link">About Us</a>
+                <a href="#services" class="navbar-link">Services</a>
+                <a href="#contact" class="navbar-link">Contact</a>
+            </div>
+        </div>
+        <div class="navbar-menu-mobile" id="mobileMenu">
+            <a href="#home" class="navbar-link-mobile active">Home</a>
+            <a href="#about" class="navbar-link-mobile">About Us</a>
+            <a href="#services" class="navbar-link-mobile">Services</a>
+            <a href="#contact" class="navbar-link-mobile">Contact</a>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <section id="home" class="section">
+            <div class="mcq-form-container">
+                <h1 class="mcq-form-title">Generate MCQs</h1>
+                <p class="mcq-form-description">
+                    This application generates multiple-choice questions (MCQs) based on the provided text. 
+                    You can either upload a PDF or TXT file containing the text.
+                </p>
+                
+                <form method="POST" enctype="multipart/form-data" class="mcq-form">
+                    <div class="form-group">
+                        <label for="file" class="form-label">Upload File(s) (PDF or TXT)</label>
+                        <div class="file-input-wrapper">
+                            <input type="file" class="form-file-input" id="file" name="files[]" multiple accept=".pdf,.txt">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="num_questions" class="form-label">Number of Questions:</label>
+                        <select class="form-select" id="num_questions" name="num_questions">
+                            <option value="5">5</option>
+                            <option value="10">10</option>
+                            <option value="15">15</option>
+                            <option value="20">20</option>
+                        </select>
+                    </div>
+                    
+                    <button type="submit" class="form-submit-btn">Generate MCQs</button>
+                </form>
+            </div>
+        </section>
+
+        <section id="about" class="section">
+            <div class="about-container">
+                <h2 class="section-title">About Us</h2>
+                <div class="about-content">
+                    <div class="about-text">
+                        <h3>Who We Are</h3>
+                        <p>We are dedicated to revolutionizing the way educators create assessment materials. Our MCQ Generator tool helps teachers and trainers save valuable time while maintaining high-quality standards in their assessments.</p>
+                        
+                        <h3>Our Mission</h3>
+                        <p>To provide educators with efficient, reliable tools that streamline the process of creating multiple-choice questions, allowing them to focus more on teaching and less on administrative tasks.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="services" class="section">
+            <div class="services-container">
+                <h2 class="section-title">Our Services</h2>
+                <div class="services-grid">
+                    <div class="service-card">
+                        <h3>MCQ Generation</h3>
+                        <p>Automatically generate multiple-choice questions from your content with our advanced AI algorithms.</p>
+                    </div>
+                    <div class="service-card">
+                        <h3>PDF Processing</h3>
+                        <p>Extract text from PDF documents and convert them into high-quality multiple-choice questions.</p>
+                    </div>
+                    <div class="service-card">
+                        <h3>Custom Formatting</h3>
+                        <p>Choose the number of questions and customize the output format according to your needs.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="section">
+            <div class="contact-container">
+                <h2 class="section-title">Contact Us</h2>
+                <form class="contact-form">
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea id="message" name="message" rows="5" required></textarea>
+                    </div>
+                    <button type="submit" class="form-submit-btn">Send Message</button>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3 class="footer-title">MCQ Generator</h3>
+                    <p>Empowering educators with intelligent assessment tools.</p>
+                </div>
+                <div class="footer-section">
+                    <h3 class="footer-title">Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#about">About Us</a></li>
+                        <li><a href="#services">Services</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3 class="footer-title">Connect With Us</h3>
+                    <div class="social-links">
+                        <a href="#" class="social-link">Facebook</a>
+                        <a href="#" class="social-link">Twitter</a>
+                        <a href="#" class="social-link">LinkedIn</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 MCQ Generator. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById('menuToggle').addEventListener('click', function() {
+            document.getElementById('mobileMenu').classList.toggle('active');
+            this.classList.toggle('active');
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>
